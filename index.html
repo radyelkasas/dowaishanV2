@@ -1,0 +1,2561 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنصة الإلكترونية لخدمات المنفذ الخاص</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+
+        :root {
+            --primary-color: #E2B971;
+            --primary-dark: #BB9654;
+            --secondary-color: #1A2B3C;
+            --tertiary-color: #3A4F68;
+            --light-bg: #f8f9fa;
+            --text-color: #333;
+            --light-text: #f8f9fa;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Header & Navigation - تحسين */
+        .header {
+            background-color: rgba(26, 43, 60, 0.95);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            padding: 10px 0;
+            background-color: rgba(26, 43, 60, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-left: 10px;
+        }
+
+        .logo-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-right: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+            padding: 8px 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            right: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .login-btn,
+        .signup-btn {
+            padding: 8px 20px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .login-btn {
+            margin-left: 15px;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            background-color: transparent;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(226, 185, 113, 0.3);
+        }
+
+        .signup-btn {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+        }
+
+        .signup-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(187, 150, 84, 0.3);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            cursor: pointer;
+        }
+
+        /* Hero Section - تحسين */
+        .hero {
+            padding-top: 100px;
+            background-color: var(--light-bg);
+            background-image: url('assets/paul-fiedler-M_S7pim3Hwg-unsplash.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 43, 60, 0.9) 0%, rgba(26, 43, 60, 0.7) 100%);
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(226, 185, 113, 0.3) 0%, rgba(226, 185, 113, 0) 70%);
+            bottom: -150px;
+            right: 10%;
+            z-index: 1;
+            animation: pulse 8s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0.1;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            width: 45%;
+            color: white;
+            animation: fadeInUp 1.2s ease-out;
+            margin-right: 10%;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 25px;
+            line-height: 1.2;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            bottom: -12px;
+            right: 0;
+            border-radius: 2px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 35px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            padding: 14px 32px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .primary-btn::before,
+        .secondary-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+            z-index: -1;
+        }
+
+        .primary-btn:hover::before,
+        .secondary-btn:hover::before {
+            transform: translateX(0);
+        }
+
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            box-shadow: 0 4px 15px rgba(226, 185, 113, 0.3);
+        }
+
+        .primary-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(226, 185, 113, 0.4);
+        }
+
+        .secondary-btn {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .secondary-btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(26, 43, 60, 0.2);
+        }
+
+        .btn-icon {
+            margin-right: 12px;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .primary-btn:hover .btn-icon,
+        .secondary-btn:hover .btn-icon {
+            transform: translateX(-3px);
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            height: 100%;
+            width: 50%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .hero-image img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .three-model-container {
+            position: absolute;
+            left: 55%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .float-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            right: 10%;
+            animation: float 25s ease-in-out infinite alternate;
+        }
+
+        .float-2 {
+            width: 200px;
+            height: 200px;
+            bottom: 10%;
+            left: 5%;
+            animation: float 20s ease-in-out infinite alternate-reverse;
+        }
+
+        .float-3 {
+            width: 150px;
+            height: 150px;
+            top: 20%;
+            left: 20%;
+            animation: float 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(30px, 30px) rotate(45deg);
+            }
+        }
+
+        /* Features Section */
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: var(--tertiary-color);
+            max-width: 700px;
+            margin: 20px auto 0;
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover::before {
+            height: 100%;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(226, 185, 113, 0.15);
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon i {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .feature-desc {
+            flex: 1;
+            line-height: 1.6;
+            color: var(--tertiary-color);
+        }
+
+        /* Services Section */
+        .services {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .services .section-title h2 {
+            color: white;
+        }
+
+        .services .section-title p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .services-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .service-box {
+            flex: 1 1 300px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            padding: 35px;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .service-box:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-10px) !important;
+        }
+
+        .service-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.1);
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .service-title::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            right: 0;
+        }
+
+        .service-desc {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .service-items {
+            margin-top: 20px;
+            list-style: none;
+        }
+
+        .service-items li {
+            margin-bottom: 15px;
+            padding-right: 20px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .service-items li::before {
+            content: '✓';
+            color: var(--primary-color);
+            position: absolute;
+            right: 0;
+        }
+
+        /* Why Choose Us */
+        .why-us {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-us-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/api/placeholder/1200/600');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.05;
+            z-index: -1;
+        }
+
+        .why-us-container {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+        }
+
+        .why-us-content {
+            flex: 1;
+        }
+
+        .why-us-title {
+            font-size: 2.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        .why-us-desc {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--tertiary-color);
+            margin-bottom: 30px;
+        }
+
+        .why-us-items {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .why-us-item {
+            display: flex;
+            align-items: flex-start;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .why-us-icon {
+            width: 45px;
+            height: 45px;
+            min-width: 45px;
+            background-color: rgba(226, 185, 113, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+        }
+
+        .why-us-icon i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .why-us-item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+        }
+
+        .why-us-item-desc {
+            line-height: 1.6;
+            color: var(--tertiary-color);
+        }
+
+        .why-us-image {
+            flex: 1;
+            position: relative;
+            transform: translateX(30px);
+        }
+
+        .why-us-image img {
+            width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .stats-container {
+            margin-top: 80px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .stat-box {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .stat-box:hover {
+            transform: translateY(-10px) !important;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .stat-text {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background-color: var(--light-bg);
+        }
+
+        .testimonials-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .testimonials-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial-slide {
+            min-width: 100%;
+            padding: 0 15px;
+        }
+
+        .testimonial-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--box-shadow);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 5rem;
+            color: rgba(226, 185, 113, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--tertiary-color);
+            margin-bottom: 25px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-author-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-left: 15px;
+        }
+
+        .testimonial-author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .testimonial-author-info h4 {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .testimonial-author-info p {
+            color: var(--tertiary-color);
+        }
+
+        .testimonial-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            gap: 15px;
+        }
+
+        .testimonial-nav-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: white;
+            color: var(--secondary-color);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-nav-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 8px;
+        }
+
+        .testimonial-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .testimonial-dot.active {
+            background-color: var(--primary-color);
+            transform: scale(1.3);
+        }
+
+        /* Contact */
+        .contact {
+            background-color: white;
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 50px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-title {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .contact-icon {
+            min-width: 50px;
+            height: 50px;
+            background-color: rgba(226, 185, 113, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+        }
+
+        .contact-icon i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .contact-text h4 {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+        }
+
+        .contact-text p,
+        .contact-text a {
+            color: var(--tertiary-color);
+            line-height: 1.6;
+            text-decoration: none;
+        }
+
+        .contact-text a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .contact-form {
+            flex: 1.2;
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(226, 185, 113, 0.2);
+            outline: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-col {
+            flex: 1;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 12px 30px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(187, 150, 84, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 80px 0 0;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            margin-left: 10px;
+        }
+
+        .footer-logo-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .footer-about {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 25px;
+        }
+
+        .footer-title {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            right: 0;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            display: block;
+            line-height: 1.7;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-contact-icon {
+            min-width: 20px;
+            margin-left: 10px;
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px 0;
+            margin-top: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-nav a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 99;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+
+        /* تزيين القسم الرئيسي - متقدم ومحسن */
+        .hero-decoration {
+            position: absolute;
+            bottom: -10px;
+            left: 5%;
+            width: 45%;
+            max-width: 650px;
+            z-index: 2;
+            opacity: 0;
+            transform: scaleX(-1);
+            /* عكس الصورة أفقياً */
+            filter: drop-shadow(0 10px 30px rgba(226, 185, 113, 0.2)) brightness(0.9) contrast(1.1);
+            /* تأثير التعتيم والظل */
+            animation: rise-up 1.8s ease-out forwards;
+            transform-origin: bottom center;
+        }
+
+        @keyframes rise-up {
+            0% {
+                transform: translateY(100%) scaleX(-1);
+                opacity: 0;
+                filter: drop-shadow(0 10px 30px rgba(226, 185, 113, 0.2)) brightness(0.7) contrast(1.1);
+            }
+
+            100% {
+                transform: translateY(0) scaleX(-1);
+                opacity: 0.9;
+                filter: drop-shadow(0 10px 30px rgba(226, 185, 113, 0.2)) brightness(0.9) contrast(1.1);
+            }
+        }
+
+        .hero-decoration img {
+            width: 100%;
+            height: auto;
+            opacity: 0.85;
+            /* جعل التمثال أكثر خفوتاً */
+            transform-origin: center center;
+        }
+
+        @keyframes float-justice {
+            0% {
+                transform: translateY(0) scaleX(-1);
+            }
+
+            100% {
+                transform: translateY(-20px) scaleX(-1);
+            }
+        }
+
+        /* تأثير الضوء حول التمثال */
+        .hero-decoration::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at center, rgba(226, 185, 113, 0.2) 0%, rgba(226, 185, 113, 0) 70%);
+            z-index: -1;
+            transform: scale(1.2);
+            animation: glow 4s ease-in-out infinite alternate;
+            filter: blur(20px);
+        }
+
+        @keyframes glow {
+            0% {
+                opacity: 0.5;
+                transform: scale(1.2);
+            }
+
+            100% {
+                opacity: 0.8;
+                transform: scale(1.4);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .container {
+                width: 90%;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .mobile-menu {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background-color: var(--secondary-color);
+                z-index: 1001;
+                padding: 70px 30px 30px;
+                transform: translateX(-100%);
+                transition: var(--transition);
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+            }
+
+            .mobile-menu.active {
+                transform: translateX(0);
+            }
+
+            .mobile-close-btn {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: var(--primary-color);
+            }
+
+            .mobile-links {
+                list-style: none;
+                margin-top: 20px;
+            }
+
+            .mobile-links li {
+                margin-bottom: 20px;
+            }
+
+            .mobile-links a {
+                text-decoration: none;
+                color: white;
+                font-size: 1.1rem;
+                display: block;
+                padding: 10px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                transition: all 0.3s ease;
+            }
+
+            .mobile-links a:hover {
+                color: var(--primary-color);
+                transform: translateX(-10px);
+                padding-right: 10px;
+            }
+
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+            }
+
+            .overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .hero-content {
+                width: 100%;
+                text-align: center;
+                padding: 0 20px;
+                margin: 0 auto 300px;
+                /* المسافة بين النص والصورة */
+            }
+
+            .hero-decoration {
+                position: absolute;
+                top: auto;
+                bottom: 0;
+                right: auto;
+                left: 50%;
+                transform: translateX(-50%) scaleX(-1);
+                width: 80%;
+                max-width: 400px;
+            }
+
+            @keyframes float-justice {
+                0% {
+                    transform: translateY(0) translateX(-50%) scaleX(-1);
+                }
+
+                100% {
+                    transform: translateY(-15px) translateX(-50%) scaleX(-1);
+                }
+            }
+
+            .hero-decoration img {
+                max-width: 100%;
+                margin: 0 auto;
+                display: block;
+            }
+
+            .hero-btns {
+                justify-content: center;
+            }
+
+            .why-us-container {
+                flex-direction: column;
+            }
+
+            .why-us-image {
+                order: -1;
+            }
+
+            .why-us-items {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-container {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .testimonial-card {
+                padding: 30px 20px;
+            }
+
+            .stat-box {
+                padding: 20px 15px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        /* إضافة تأثيرات إضافية للصفحة */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 43, 60, 0.9) 0%, rgba(26, 43, 60, 0.7) 100%);
+            z-index: 1;
+            animation: gradientShift 15s ease infinite alternate;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* تأثير الهوفر للروابط */
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 100%;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(226, 185, 113, 0.1);
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        /* تأثير دخول العناصر للشاشة */
+        .fade-in-element {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in-element.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* تأثير الضوء الخلفي */
+        .glow-effect {
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            top: -10%;
+            left: -10%;
+            background: radial-gradient(circle at center, rgba(226, 185, 113, 0.35) 0%, rgba(226, 185, 113, 0) 70%);
+            z-index: -1;
+            filter: blur(40px);
+            opacity: 0.7;
+            animation: subtle-glow 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes subtle-glow {
+            0% {
+                opacity: 0.4;
+                transform: scale(1.1);
+                filter: blur(40px) brightness(0.8);
+            }
+
+            100% {
+                opacity: 0.7;
+                transform: scale(1.2);
+                filter: blur(35px) brightness(1);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideLeft {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideRight {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container nav-container">
+            <div class="logo">
+                <img src="assets/logo-gold.png" alt="شعار المنصة الإلكترونية للمنفذ الخاص">
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#features">المميزات</a></li>
+                <li><a href="#services">الخدمات</a></li>
+                <li><a href="#why-us">لماذا نحن</a></li>
+                <li><a href="#about">من نحن</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+
+            <div class="auth-buttons">
+                <button class="login-btn">تسجيل الدخول</button>
+                <button class="signup-btn">إنشاء حساب</button>
+            </div>
+
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="overlay"></div>
+
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="floating-element float-1"></div>
+        <div class="floating-element float-2"></div>
+        <div class="floating-element float-3"></div>
+
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="animate-slide-up">المنصة الإلكترونية المتكاملة للخدمات القانونية والتنفيذية</h1>
+                <p class="animate-slide-up">نقدم أكثر الحلول تطوراً لتسهيل وتسريع كافة الإجراءات التنفيذية والقانونية من
+                    خلال منصة إلكترونية ذكية توفر لك كل ما تحتاجه في مكان واحد.</p>
+                <div class="hero-btns">
+                    <button class="primary-btn animate-slide-up">
+                        <i class="fas fa-user-plus btn-icon"></i>
+                        ابدأ الآن
+                    </button>
+                    <button class="secondary-btn animate-slide-up">
+                        <i class="fas fa-video btn-icon"></i>
+                        شاهد الفيديو التعريفي
+                    </button>
+                </div>
+            </div>
+            <div class="hero-decoration">
+                <img src="assets/still-life-with-scales-justice-removebg-preview.png"
+                    alt="شعار المنصة الإلكترونية للمنفذ الخاص">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>مميزات المنصة</h2>
+                <p>تتميز منصتنا الإلكترونية بالعديد من الخصائص التقنية المتطورة التي تضمن سرعة وكفاءة إنجاز كافة
+                    الإجراءات القانونية والتنفيذية</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3 class="feature-title">واجهة مستخدم ذكية</h3>
+                    <p class="feature-desc">تصميم عصري وسهل الاستخدام يعمل بكفاءة على جميع الأجهزة (كمبيوتر، أجهزة
+                        لوحية، هواتف ذكية)</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">نظام أمان متكامل</h3>
+                    <p class="feature-desc">تشفير SSL، مصادقة ثنائية، وحماية متطورة من الاختراقات لضمان سرية وأمان
+                        بياناتك ومعاملاتك</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3 class="feature-title">لوحة تحكم متكاملة</h3>
+                    <p class="feature-desc">لوحات تحكم مخصصة لكل من (العملاء، المنفذين الخاصين، المحامين، الإداريين) مع
+                        إمكانية إدارة جميع المعاملات</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3 class="feature-title">نظام إشعارات ذكي</h3>
+                    <p class="feature-desc">تنبيهات داخلية + رسائل SMS + إيميلات للتحديثات المهمة لإبقائك على اطلاع بكل
+                        تطورات معاملاتك</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3 class="feature-title">دعم لغات متعدد</h3>
+                    <p class="feature-desc">دعم كامل للغة العربية والإنجليزية مع واجهة سهلة للتبديل بين اللغات حسب
+                        تفضيلاتك</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3 class="feature-title">تخزين سحابي آمن</h3>
+                    <p class="feature-desc">تخزين آمن لجميع المستندات والملفات مع إمكانية الوصول إليها من أي مكان وفي أي
+                        وقت</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>خدماتنا الأساسية</h2>
+                <p>نقدم مجموعة متكاملة من الخدمات القانونية والتنفيذية التي تلبي احتياجات عملائنا</p>
+            </div>
+
+            <div class="services-container">
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="service-title">تقديم الطلبات الذكية</h3>
+                    <p class="service-desc">خدمة متطورة لتقديم كافة أنواع الطلبات القانونية والتنفيذية بطريقة سهلة
+                        وسريعة</p>
+                    <ul class="service-items">
+                        <li>نظام إرشادي خطوة بخطوة لملء النماذج</li>
+                        <li>حفظ المسودات واستكمالها لاحقاً</li>
+                        <li>تحميل المستندات المطلوبة مباشرة</li>
+                        <li>معاينة الطلب قبل الإرسال النهائي</li>
+                    </ul>
+                </div>
+
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3 class="service-title">إدارة المدفوعات</h3>
+                    <p class="service-desc">نظام متكامل لإدارة وتسديد كافة الرسوم المالية المتعلقة بالإجراءات التنفيذية
+                    </p>
+                    <ul class="service-items">
+                        <li>حساب آلي للرسوم المستحقة</li>
+                        <li>خيارات دفع متعددة (بطاقات، تحويل بنكي، محافظ إلكترونية)</li>
+                        <li>إصدار فواتير إلكترونية معتمدة</li>
+                        <li>سجل كامل لجميع المعاملات المالية</li>
+                    </ul>
+                </div>
+
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3 class="service-title">نماذج التنفيذ الجبري</h3>
+                    <p class="service-desc">خدمات متخصصة للتنفيذ الجبري للأحكام والسندات القانونية والعقود الموثقة</p>
+                    <ul class="service-items">
+                        <li>نموذج تنفيذ الأحكام القضائية</li>
+                        <li>نموذج تنفيذ السندات الرسمية</li>
+                        <li>نموذج تنفيذ عقود التوثيق</li>
+                    </ul>
+                </div>
+
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <h3 class="service-title">إجراءات الحجز</h3>
+                    <p class="service-desc">خدمات متكاملة للحجز القانوني على الأموال والعقارات والمنقولات</p>
+                    <ul class="service-items">
+                        <li>طلب حجز على أموال</li>
+                        <li>طلب حجز على عقارات</li>
+                        <li>طلب حجز على منقولات</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="section why-us" id="why-us">
+        <div class="why-us-bg"></div>
+        <div class="container">
+            <div class="why-us-container">
+                <div class="why-us-content">
+                    <h2 class="why-us-title">لماذا تختار منصتنا الإلكترونية؟</h2>
+                    <p class="why-us-desc">نحن نسعى لتقديم خدمات قانونية وتنفيذية بمعايير عالمية من خلال منصة رقمية
+                        متطورة تجمع بين السهولة والأمان والاحترافية.</p>
+
+                    <div class="why-us-items">
+                        <div class="why-us-item">
+                            <div class="why-us-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="why-us-item-content">
+                                <h4 class="why-us-item-title">توفير الوقت</h4>
+                                <p class="why-us-item-desc">إنجاز المعاملات في دقائق بدلاً من أيام من خلال منصتنا
+                                    الإلكترونية</p>
+                            </div>
+                        </div>
+
+                        <div class="why-us-item">
+                            <div class="why-us-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="why-us-item-content">
+                                <h4 class="why-us-item-title">الشفافية</h4>
+                                <p class="why-us-item-desc">متابعة كل خطوة في عملية التنفيذ بشكل مباشر وشفاف</p>
+                            </div>
+                        </div>
+
+                        <div class="why-us-item">
+                            <div class="why-us-icon">
+                                <i class="fas fa-check-double"></i>
+                            </div>
+                            <div class="why-us-item-content">
+                                <h4 class="why-us-item-title">الدقة</h4>
+                                <p class="why-us-item-desc">تقليل الأخطاء اليدوية في الإجراءات من خلال النظام الآلي
+                                    الذكي</p>
+                            </div>
+                        </div>
+
+                        <div class="why-us-item">
+                            <div class="why-us-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="why-us-item-content">
+                                <h4 class="why-us-item-title">الحماية</h4>
+                                <p class="why-us-item-desc">بيئة آمنة لجميع معاملاتك القانونية مع أعلى درجات الحماية</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="why-us-image">
+                    <img src="/assets/pexels-pixabay-159832.jpg" alt="منصتنا الإلكترونية">
+                </div>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-box">
+                    <span class="stat-number" data-count="5000">0</span><span>+</span>
+                    <p class="stat-text">عميل راضي</p>
+                </div>
+
+                <div class="stat-box">
+                    <span class="stat-number" data-count="8500">0</span><span>+</span>
+                    <p class="stat-text">معاملة منجزة</p>
+                </div>
+
+                <div class="stat-box">
+                    <span class="stat-number" data-count="150">0</span><span>+</span>
+                    <p class="stat-text">منفذ خاص معتمد</p>
+                </div>
+
+                <div class="stat-box">
+                    <span class="stat-number" data-count="99">0</span><span>%</span>
+                    <p class="stat-text">نسبة رضا العملاء</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>من نحن</h2>
+                <p>نبذة تعريفية عن المنصة الإلكترونية لخدمات المنفذ الخاص</p>
+            </div>
+
+            <div class="why-us-container">
+                <div class="why-us-content">
+                    <h2 class="why-us-title">المنصة الإلكترونية الرائدة في مجال الخدمات القانونية التنفيذية</h2>
+                    <p class="why-us-desc">هذه المنصة مصممة لتكون <strong>الحل الشامل</strong> لكل ما يتعلق بخدمات
+                        التنفيذ، حيث تجمع بين <strong>البساطة</strong> في الاستخدام و<strong>القوة</strong> في الأداء،
+                        مع الحفاظ على أعلى معايير <strong>الأمان القانوني والمعلوماتي</strong>.</p>
+
+                    <div class="about-content">
+                        <div class="about-item">
+                            <h4>🎯 رؤيتنا</h4>
+                            <p>أن نكون المنصة الرائدة والأكثر موثوقية في مجال الخدمات القانونية التنفيذية على مستوى
+                                المنطقة.</p>
+                        </div>
+
+                        <div class="about-item">
+                            <h4>📜 رسالتنا</h4>
+                            <p>تقديم خدمات قانونية وتنفيذية متميزة ومبتكرة من خلال منصة رقمية متطورة تحقق أعلى درجات
+                                الرضا للعملاء.</p>
+                        </div>
+
+                        <div class="about-item">
+                            <h4>⭐ قيمنا</h4>
+                            <p>الشفافية - الاحترافية - السرعة في التنفيذ - الدقة - التطوير المستمر</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="why-us-image">
+                    <img src="/assets/giammarco-boscaro-zeH-ljawHtg-unsplash.jpg" alt="من نحن">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>آراء العملاء</h2>
+                <p>تعرف على تجارب عملائنا مع المنصة الإلكترونية لخدمات المنفذ الخاص</p>
+            </div>
+
+            <div class="testimonials-container">
+                <div class="testimonials-track">
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">المنصة الإلكترونية لخدمات المنفذ الخاص وفرت علينا الكثير من
+                                الوقت والجهد. كل الإجراءات تتم بطريقة سلسة وسريعة مع متابعة دقيقة لكل خطوة في العملية
+                                التنفيذية.</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-author-img">
+                                    <img src="/api/placeholder/60/60" alt="صورة العميل">
+                                </div>
+                                <div class="testimonial-author-info">
+                                    <h4>أحمد محمد</h4>
+                                    <p>مدير شركة</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">كمحامي، أعتبر هذه المنصة من أفضل المنصات القانونية التي تعاملت
+                                معها. الدقة في الإجراءات والسرعة في التنفيذ تجعلها أداة مثالية لكل محامي يبحث عن
+                                الاحترافية في العمل.</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-author-img">
+                                    <img src="/api/placeholder/60/60" alt="صورة العميل">
+                                </div>
+                                <div class="testimonial-author-info">
+                                    <h4>سارة أحمد</h4>
+                                    <p>محامية</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <p class="testimonial-text">أنا سعيد جدًا بتجربتي مع المنصة الإلكترونية للمنفذ الخاص. الدعم
+                                الفني ممتاز والإجراءات واضحة وسهلة. بالإضافة إلى الأمان العالي الذي يوفره النظام لحماية
+                                المعلومات والبيانات.</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-author-img">
+                                    <img src="/api/placeholder/60/60" alt="صورة العميل">
+                                </div>
+                                <div class="testimonial-author-info">
+                                    <h4>خالد عبدالله</h4>
+                                    <p>رجل أعمال</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-nav">
+                    <button class="testimonial-nav-btn prev-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button class="testimonial-nav-btn next-btn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
+
+                <div class="testimonial-dots">
+                    <span class="testimonial-dot active"></span>
+                    <span class="testimonial-dot"></span>
+                    <span class="testimonial-dot"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>تواصل معنا</h2>
+                <p>نحن هنا دائمًا للإجابة على استفساراتك وتقديم المساعدة والدعم</p>
+            </div>
+
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3 class="contact-title">معلومات التواصل</h3>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>العنوان</h4>
+                            <p>الرياض، شارع الملك فهد، برج الريم، الطابق 15</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>الهاتف</h4>
+                            <p><a href="tel:+966512345678">+966 51 234 5678</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>البريد الإلكتروني</h4>
+                            <p><a href="mailto:info@legalplatform.com">info@legalplatform.com</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>ساعات العمل</h4>
+                            <p>الأحد - الخميس: 8:00 ص - 4:00 م</p>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="name" class="form-label">الاسم الكامل</label>
+                                    <input type="text" id="name" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="email" class="form-label">البريد الإلكتروني</label>
+                                    <input type="email" id="email" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">رقم الهاتف</label>
+                                    <input type="tel" id="phone" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="subject" class="form-label">نوع الاستفسار</label>
+                                    <select id="subject" class="form-control" required>
+                                        <option value="">اختر نوع الاستفسار</option>
+                                        <option value="general">استفسار عام</option>
+                                        <option value="service">الاستفسار عن خدمة</option>
+                                        <option value="support">الدعم الفني</option>
+                                        <option value="sales">المبيعات</option>
+                                        <option value="complaint">شكوى</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="form-label">الرسالة</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="submit-btn">
+                                إرسال الرسالة <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about-us">
+                    <div class="footer-logo">
+                        <img src="/api/placeholder/50/50" alt="شعار المنصة الإلكترونية للمنفذ الخاص">
+                        <div class="footer-logo-text">المنصة الإلكترونية<br>لخدمات المنفذ الخاص</div>
+                    </div>
+                    <p class="footer-about">منصتنا الإلكترونية هي الحل الشامل لجميع الخدمات القانونية والتنفيذية، نسعى
+                        دائماً لتقديم خدمات متميزة تواكب التطور التقني وتحقق أعلى درجات الرضا للعملاء.</p>
+                </div>
+
+                <div class="footer-links-container">
+                    <h3 class="footer-title">روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#features">المميزات</a></li>
+                        <li><a href="#services">الخدمات</a></li>
+                        <li><a href="#why-us">لماذا نحن</a></li>
+                        <li><a href="#about">من نحن</a></li>
+                        <li><a href="#contact">تواصل معنا</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-container">
+                    <h3 class="footer-title">خدماتنا</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">تقديم الطلبات الذكية</a></li>
+                        <li><a href="#">إدارة المدفوعات</a></li>
+                        <li><a href="#">التنفيذ الجبري</a></li>
+                        <li><a href="#">إجراءات الحجز</a></li>
+                        <li><a href="#">خدمات الوساطة القانونية</a></li>
+                        <li><a href="#">الاستشارات التنفيذية</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h3 class="footer-title">تواصل معنا</h3>
+                    <div class="footer-contact-item">
+                        <div class="footer-contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>الرياض، شارع الملك فهد، برج الريم، الطابق 15</div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <div class="footer-contact-icon"><i class="fas fa-phone-alt"></i></div>
+                        <div>+966 51 234 5678</div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <div class="footer-contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div>info@legalplatform.com</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="copyright">© 2025 المنصة الإلكترونية لخدمات المنفذ الخاص. جميع الحقوق محفوظة.</div>
+                <div class="footer-nav">
+                    <a href="#">سياسة الخصوصية</a>
+                    <a href="#">شروط الاستخدام</a>
+                    <a href="#">سياسة الاسترجاع</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // DOM Elements
+        const header = document.querySelector('.header');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileCloseBtn = document.querySelector('.mobile-close-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const overlay = document.querySelector('.overlay');
+        const backToTop = document.querySelector('.back-to-top');
+        const featureCards = document.querySelectorAll('.feature-card');
+        const serviceBoxes = document.querySelectorAll('.service-box');
+        const whyUsItems = document.querySelectorAll('.why-us-item');
+        const whyUsImage = document.querySelector('.why-us-image');
+        const statBoxes = document.querySelectorAll('.stat-box');
+        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        const testimonialDots = document.querySelectorAll('.testimonial-dot');
+
+        // Variables
+        let currentSlide = 0;
+        const slidesCount = testimonialSlides.length;
+
+        // تأثير ظهور العناصر عند التمرير
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('.fade-in-element');
+
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (elementTop < windowHeight * 0.9) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', handleScrollAnimations);
+
+        // تفعيل تأثيرات الانيميشن الأولية
+        window.addEventListener('load', () => {
+            handleScrollAnimations();
+
+            // إضافة تأثير ضوء خلفي للتمثال
+            const heroDecoration = document.querySelector('.hero-decoration');
+
+            if (heroDecoration) {
+                const glowEffect = document.createElement('div');
+                glowEffect.classList.add('glow-effect');
+                heroDecoration.appendChild(glowEffect);
+            }
+        });
+
+        // تحسين تأثيرات الهوفر لجميع الأزرار
+        const allButtons = document.querySelectorAll('button');
+
+        allButtons.forEach(button => {
+            button.addEventListener('mouseover', function () {
+                this.style.transform = 'translateY(-5px)';
+                this.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            });
+
+            button.addEventListener('mouseout', function () {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+
+            animateOnScroll();
+        });
+
+        // Mobile Menu
+        if (mobileMenuBtn && mobileMenu && overlay) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            if (mobileCloseBtn) {
+                mobileCloseBtn.addEventListener('click', closeMenu);
+            }
+
+            if (overlay) {
+                overlay.addEventListener('click', closeMenu);
+            }
+
+            function closeMenu() {
+                mobileMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            // Mobile menu links close menu when clicked
+            const mobileLinks = document.querySelectorAll('.mobile-links a');
+            if (mobileLinks) {
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', closeMenu);
+                });
+            }
+        }
+
+        // Back to Top
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Testimonial Slider
+        function showSlide(index) {
+            if (index < 0) {
+                currentSlide = slidesCount - 1;
+            } else if (index >= slidesCount) {
+                currentSlide = 0;
+            } else {
+                currentSlide = index;
+            }
+
+            const translateValue = -currentSlide * 100 + '%';
+            document.querySelector('.testimonials-track').style.transform = `translateX(${translateValue})`;
+
+            // Update dots
+            testimonialDots.forEach((dot, i) => {
+                if (i === currentSlide) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        prevBtn.addEventListener('click', () => {
+            showSlide(currentSlide - 1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            showSlide(currentSlide + 1);
+        });
+
+        testimonialDots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                showSlide(i);
+            });
+        });
+
+        // Auto slide
+        setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+
+        // Scroll Animations
+        function animateOnScroll() {
+            const triggerBottom = window.innerHeight * 0.8;
+
+            featureCards.forEach((card, index) => {
+                const cardTop = card.getBoundingClientRect().top;
+
+                if (cardTop < triggerBottom) {
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100);
+                }
+            });
+
+            serviceBoxes.forEach((box, index) => {
+                const boxTop = box.getBoundingClientRect().top;
+
+                if (boxTop < triggerBottom) {
+                    setTimeout(() => {
+                        box.style.opacity = '1';
+                        box.style.transform = 'translateY(0)';
+                    }, index * 100);
+                }
+            });
+
+            whyUsItems.forEach((item, index) => {
+                const itemTop = item.getBoundingClientRect().top;
+
+                if (itemTop < triggerBottom) {
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateX(0)';
+                    }, index * 100);
+                }
+            });
+
+            if (whyUsImage) {
+                const imageTop = whyUsImage.getBoundingClientRect().top;
+
+                if (imageTop < triggerBottom) {
+                    whyUsImage.style.opacity = '1';
+                    whyUsImage.style.transform = 'translateX(0)';
+                }
+            }
+
+            statBoxes.forEach((box, index) => {
+                const boxTop = box.getBoundingClientRect().top;
+
+                if (boxTop < triggerBottom) {
+                    setTimeout(() => {
+                        box.style.opacity = '1';
+                        box.style.transform = 'translateY(0)';
+
+                        // Start counter animation when box is visible
+                        const countElement = box.querySelector('.stat-number');
+                        const countTo = parseInt(countElement.getAttribute('data-count'));
+                        startCounting(countElement, countTo);
+                    }, index * 100);
+                }
+            });
+        }
+
+        function initAnimations() {
+            // Initial animations for visible elements
+            setTimeout(() => {
+                animateOnScroll();
+            }, 500);
+        }
+
+        // Counter Animation
+        function startCounting(element, target) {
+            if (element.textContent === '0') {
+                let count = 0;
+                const duration = 2000; // 2 seconds
+                const interval = Math.floor(duration / target);
+
+                const counter = setInterval(() => {
+                    count += 1;
+                    element.textContent = count;
+
+                    if (count >= target) {
+                        element.textContent = target;
+                        clearInterval(counter);
+                    }
+                }, interval);
+            }
+        }
+
+        function initCounters() {
+            statBoxes.forEach(box => {
+                const countElement = box.querySelector('.stat-number');
+                countElement.textContent = '0';
+            });
+        }
+
+        // Three.js for 3D Model
+        function initThreeJS() {
+            // Container
+            const container = document.getElementById('model-container');
+
+            if (!container) return;
+
+            // Scene, camera, renderer
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true });
+
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            const light1 = new THREE.DirectionalLight(0xffffff, 1);
+            light1.position.set(0, 10, 10);
+            scene.add(light1);
+
+            const light2 = new THREE.DirectionalLight(0xE2B971, 0.8);
+            light2.position.set(10, 0, 0);
+            scene.add(light2);
+
+            // Add Lady Justice model
+            // Here we add a placeholder 3D object since we can't load the external GLB model
+            // In a real implementation, you would use THREE.GLTFLoader to load the Justice_Deity_0501224503_texture.glb file
+            const geometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
+            const material = new THREE.MeshStandardMaterial({
+                color: 0xE2B971,
+                metalness: 0.7,
+                roughness: 0.3
+            });
+            const ladyJustice = new THREE.Mesh(geometry, material);
+            scene.add(ladyJustice);
+
+            // Position camera
+            camera.position.z = 5;
+
+            // Animation
+            const animate = () => {
+                requestAnimationFrame(animate);
+
+                ladyJustice.rotation.x += 0.01;
+                ladyJustice.rotation.y += 0.01;
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            // Responsive
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        }
+
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+
+                // Here you would normally send the form data to your server
+                // For demo purposes, we'll just show an alert
+                alert(`شكراً ${name}! تم استلام رسالتك وسنتواصل معك قريباً.`);
+
+                // Reset form
+                contactForm.reset();
+            });
+        }
+    </script>
+</body>
+
+</html>
